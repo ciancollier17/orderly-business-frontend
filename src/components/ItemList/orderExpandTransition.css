@@ -1,0 +1,8 @@
+/* Transition for when order ItemLists are expanded or closed */
+
+.order-expand-transition {
+  -webkit-transition: height 1s;
+  -moz-transition: height 1s;
+  -o-transition: height 1s;
+  transition: height 1s;
+}
