@@ -8,7 +8,7 @@ function OrderList (props) {
       <h2>{props.title}</h2>
       <ListGroup>
         {props.orders.map(order => {
-          return <Order key={order.id} order={order} assignedToUser={props.assignedToUser} />
+          return <Order key={order.id} order={order} />
         })}
       </ListGroup>
     </div>
