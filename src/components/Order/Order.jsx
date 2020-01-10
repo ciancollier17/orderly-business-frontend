@@ -20,7 +20,12 @@ function Order (props) {
   };
 
   let percentOfExpectedTimeElapsed = props.order.timeSinceOrder / props.order.expectedCompletionTime;
-  let badgeColour = getBadgeColour(percentOfExpectedTimeElapsed);
+
+  // TODO: Replace object with setting from redux store
+  let badgeColour = getBadgeColour(percentOfExpectedTimeElapsed, {
+    amber: 0.9,
+    red: 1.2
+  });
 
   return (
     <React.Fragment>
@@ -28,7 +33,7 @@ function Order (props) {
       <strong>{props.order.whereTo} <Badge color={badgeColour} pill>{formatTimeSinceOrder(props.order.timeSinceOrder)}</Badge></strong>
       <span>
         <Button style={{marginRight: "0.5rem"}} color="secondary" onClick={expandHandler}>Expand</Button>
-        {getButtons(props.order.takenBy, props.order.completed)}
+        {getButtons(props.order.takenBy, props.order.completed, "me")}
       </span>
     </ListGroupItem>
     <ItemList listId={props.order.id} orderItems={props.order.items} isOpen={isItemListOpen} />
