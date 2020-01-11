@@ -1,4 +1,4 @@
-const curr_time = Math.round((new Date()).getTime() / 1000);
+const curr_time = 1578751343 //Math.round((new Date()).getTime() / 1000);
 
 const sampleOrders = [
   {id: "9", whereTo: "Table 4", timeOfOrder: curr_time - 1401, expectedCompletionTime: 1200, items: [{itemName: "Chocolate Cake"}, {itemName: "Espresso"}], takenBy: "me", completed: false},

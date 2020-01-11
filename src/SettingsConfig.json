@@ -1,0 +1,31 @@
+{
+  "categories": [
+    {
+      "name": "Apps"
+    },
+    {
+      "name": "Menu"
+    },
+    {
+      "name": "Orders Screen"
+    },
+    {
+      "name": "Analytics Screen"
+    },
+    {
+      "name": "Account",
+      "settings": [
+        {
+          "id": "establishmentname",
+          "title": "Establishment Name",
+          "type": "text"
+        },
+        {
+          "id": "establishmentslogan",
+          "title": "Slogan",
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}
