@@ -1,42 +1,16 @@
 import React from 'react';
-import {Form, FormGroup, Input, Label, Button} from 'reactstrap';
+import {Form, Button} from 'reactstrap';
+import renderSettings from './renderSettings';
 
 function SettingsPage (props) {
   let settings = [];
 
-  function parseSetting (setting) {
-    switch (setting.type) {
-      case "text":
-        return (
-          <FormGroup>
-            <Label for={setting.id}>{setting.title + ": "}</Label>
-            <Input id={setting.id} type="text" />
-          </FormGroup>);
-        break;
-      default:
-        return <span>Error: Can't Parse Setting</span>
-        break;
-    }
-  }
-
-  function renderSettings () {
-    if (props.category.settings) {
-      settings = props.category.settings.map(setting => {
-        return parseSetting(setting);
-      });
-
-      return settings;
-    } else {
-      return [<span>No Settings For This Category</span>];
-    }
-  }
-
   return (
     <Form style={{marginTop: "1rem"}}>
-      {renderSettings().map(element => {
+      {renderSettings(props.category.settings, []).map(element => {
         return element;
       })}
-      <Button color="primary">Apply Settings</Button>
+      {props.category.settings ? props.category.settings.length > 0 ? <Button color="primary">Apply Settings</Button> : <span></span> : <span></span>}
     </Form>
   )
 }

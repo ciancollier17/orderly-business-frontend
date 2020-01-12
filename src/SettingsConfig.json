@@ -16,14 +16,47 @@
       "name": "Account",
       "settings": [
         {
-          "id": "establishmentname",
-          "title": "Establishment Name",
-          "type": "text"
+          "title": "Establishment Settings",
+          "type": "subcategory",
+          "settings": [
+            {
+              "id": "establishmentname",
+              "title": "Establishment Name",
+              "type": "text"
+            },
+            {
+              "id": "establishmentslogan",
+              "title": "Slogan",
+              "type": "text"
+            },
+            {
+              "id": "testdropdown",
+              "title": "Test Dropdown",
+              "type": "dropdown",
+              "options": [
+                "Option 1",
+                "Option 2",
+                "Option 3",
+                "Option 4"
+              ]
+            }
+          ]
         },
         {
-          "id": "establishmentslogan",
-          "title": "Slogan",
-          "type": "text"
+          "title": "Manager Settings",
+          "type": "subcategory",
+          "settings": [
+            {
+              "id": "managername",
+              "title": "Manager Name",
+              "type": "text"
+            },
+            {
+              "id": "managerphone",
+              "title": "Manager Phone",
+              "type": "text"
+            }
+          ]
         }
       ]
     }
