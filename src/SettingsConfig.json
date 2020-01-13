@@ -7,7 +7,53 @@
       "name": "Menu"
     },
     {
-      "name": "Orders Screen"
+      "name": "Orders Screen",
+      "settings": [
+        {
+          "title": "Test Settings",
+          "type": "subcategory",
+          "settings": [
+            {
+              "id": "testradbutton",
+              "title": "What colour do you want the app?",
+              "type": "radiobutton",
+              "options": [
+                {
+                  "label": "Red",
+                  "value": "red"
+                },
+                {
+                  "label": "Green",
+                  "value": "green"
+                },
+                {
+                  "label": "Blue",
+                  "value": "blue"
+                }
+              ]
+            },
+            {
+              "id": "testcheckbox",
+              "title": "What settings do you want in the app?",
+              "type": "checkbox",
+              "options": [
+                {
+                  "value": "managersettings",
+                  "label": "Manager Settings"
+                },
+                {
+                  "value": "ordercancellation",
+                  "label": "Order Cancellation"
+                },
+                {
+                  "value": "automaticreorder",
+                  "label": "Automatic Reorder"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Analytics Screen"

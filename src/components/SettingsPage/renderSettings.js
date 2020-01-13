@@ -37,6 +37,40 @@ function renderSettings (settingsList, renderedSettings) {
         </FormGroup>
       );
       break;
+    case "radiobutton":
+      renderedSettings.push(
+        <FormGroup tag="fieldset">
+           <legend>{setting.title + ":"}</legend>
+           {setting.options.map(option => {
+             return (
+               <FormGroup check>
+                 <Label check>
+                   <Input type="radio" name={setting.id} value={option.value} />
+                   {option.label}
+                 </Label>
+               </FormGroup>
+             );
+           })}
+         </FormGroup>
+      );
+      break;
+    case "checkbox":
+      renderedSettings.push(
+        <FormGroup tag="fieldset">
+          <legend>{setting.title + ":"}</legend>
+          {setting.options.map(option => {
+            return (
+              <FormGroup check>
+                <Label check>
+                  <Input type="checkbox" name={setting.id} value={option.value} />
+                  {option.label}
+                </Label>
+              </FormGroup>
+            );
+          })}
+          </FormGroup>
+        );
+      break;
     case "subcategory":
       renderedSettings.push(<h3>{setting.title}</h3>);
       renderSettings(setting.settings, renderedSettings);
