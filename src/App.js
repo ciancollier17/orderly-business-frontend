@@ -8,10 +8,10 @@ import Orders from './components/Orders/Orders';
 import Analytics from './components/Analytics/Analytics';
 import Settings from './components/Settings/Settings';
 import Login from './components/Login/Login';
+import LostPassword from './components/LostPassword/LostPassword';
 
 function App() {
   const dispatch = useDispatch();
-  const user = useSelector(full_state => full_state.user);
 
   useEffect(() => {
     const updateTimer = () => {
@@ -40,7 +40,7 @@ function App() {
       <Route path='/analytics' component={() => <div><Navigation /><Analytics /></div>} />
       <Route path='/settings' component={() => <div><Navigation /><Settings /></div>} />
       <Route path='/auth/login' component={Login} />
-      {!user ? <Redirect to='/auth/login' /> : ""}
+      <Route path='/auth/lostpassword' component={LostPassword} />
     </BrowserRouter>
   );
 }

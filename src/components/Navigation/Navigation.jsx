@@ -1,6 +1,6 @@
-import React from 'react';
-import {useState} from 'react';
-import {Link} from 'react-router-dom';
+import React, {useState} from 'react';
+import {useSelector} from 'react-redux';
+import {Link, Redirect} from 'react-router-dom';
 import {
   Collapse,
   Navbar,
@@ -17,6 +17,7 @@ import 'firebase/auth';
 function Navigation () {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
+  const user = useSelector(full_state => full_state.user);
 
   function logout () {
     firebase.auth().signOut().then(function() {
@@ -50,6 +51,7 @@ function Navigation () {
           <NavbarToggler onClick={toggle} />
         </span>
       </Navbar>
+      {!user ? <Redirect to='/auth/login' /> : ""}
     </div>
   );
 }

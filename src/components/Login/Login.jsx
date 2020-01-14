@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useSelector} from 'react-redux';
 import {Form, FormGroup, Input, Button, Label, Alert} from 'reactstrap';
-import {Redirect} from 'react-router-dom';
+import {Redirect, Link} from 'react-router-dom';
 import submitLogin from './submitLogin';
 
 function Login () {
@@ -20,7 +20,7 @@ function Login () {
 
   return (
     <div style={formContainerStyles}>
-    <Form style={{width: '40%', border: '2px solid #000000', padding: '1rem'}}>
+    <Form style={{width: '25%', border: '2px solid #000000', padding: '1rem'}}>
       <h1 style={{textAlign: "center"}}>Orderly</h1>
       {errorLogin ? <Alert color="danger">{errorLogin}</Alert> : <span></span>}
       <FormGroup>
@@ -32,6 +32,7 @@ function Login () {
         <Input id="password" name="password" type="password" placeholder="Password" onChange={(e) => setPasswordLogin(e.target.value)} />
       </FormGroup>
       <Button color="primary" onClick={() => submitLogin(emailLogin, passwordLogin, setErrorLogin)}>Login</Button>
+      <Link to="/auth/lostpassword" style={{marginLeft: "0.5rem"}}>Lost your password?</Link>
     </Form>
     {user ? <Redirect to='/' /> : ""}
     </div>
