@@ -2,10 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
+import * as firebase from 'firebase/app';
+import firebaseConfig from './firebaseConfig';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import reducers from './reducers';
 import App from './App.js';
 import * as serviceWorker from './serviceWorker';
+
+firebase.initializeApp(firebaseConfig);
 
 const store = createStore(reducers);
 

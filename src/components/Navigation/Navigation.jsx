@@ -11,10 +11,21 @@ import {
   NavLink,
   NavbarText,
   Button} from 'reactstrap';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
 
 function Navigation () {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
+
+  function logout () {
+    firebase.auth().signOut().then(function() {
+      // Sign-out successful.
+    }).catch(function(error) {
+      // An error happened.
+      alert(error);
+    });
+  }
 
   return (
     <div>
@@ -35,7 +46,7 @@ function Navigation () {
         </Collapse>
         <span style={{position: "absolute", top: "0.3rem", right: "0.3rem"}}>
           <NavbarText style={{marginTop: "0.2rem"}}>Cian @ White Hart</NavbarText>
-          <Button style={{marginLeft: "0.5rem", marginRight: "0.5rem"}} color="danger">Logout</Button>
+          <Button style={{marginLeft: "0.5rem", marginRight: "0.5rem"}} color="danger" onClick={logout}>Logout</Button>
           <NavbarToggler onClick={toggle} />
         </span>
       </Navbar>
