@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {BrowserRouter, Route, Redirect} from 'react-router-dom';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/firestore';
 import Navigation from './components/Navigation/Navigation';
 import Orders from './components/Orders/Orders';
 import Analytics from './components/Analytics/Analytics';
@@ -30,8 +31,24 @@ function App() {
       }
     });
 
+    // TODO: Make this use the document in business collection eventually
+    let unsubscribeOrders = firebase.firestore().collection('orders').onSnapshot(res => {
+      let newOrders = [];
+
+      res.forEach(doc => {
+        let data = doc.data();
+
+        newOrders.push({
+          id: doc.id,
+          ...data
+        });
+      });
+
+      dispatch({type: "UPDATE_ORDERS", payload: newOrders});
+    });
+
     // Cleanup by clearing interval
-    return () => {clearInterval(intervalID)};
+    return () => {clearInterval(intervalID); unsubscribeOrders()};
   }, []);
 
   return (

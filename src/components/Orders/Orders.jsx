@@ -17,7 +17,7 @@ function Orders () {
       }
     });
   }
-  
+
   return (
     <div className="row" style={{width: "90%", margin: "auto", marginBottom: "2rem"}}>
       <OrderList title="Your Orders" orders={userTakenOrders} />

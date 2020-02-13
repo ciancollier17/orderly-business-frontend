@@ -1,7 +1,14 @@
 import sampleOrders from '../testfiles/sampleOrders';
 
 function OrderReducer (initialState = sampleOrders, action) {
-  return initialState;
+  switch (action.type) {
+    case "UPDATE_ORDERS":
+      return action.payload;
+      break;
+    default:
+      return initialState;
+      break;
+  }
 }
 
 export default OrderReducer;

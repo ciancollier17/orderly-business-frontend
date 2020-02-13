@@ -23,7 +23,7 @@ function ItemList (props) {
     <div className="order-expand-transition" style={props.isOpen ? stylesForOpen : stylesForClosed}>
       <ListGroup id={props.listId}>
         {props.orderItems.map(item => {
-          return <ListGroupItem>{item.itemName}</ListGroupItem>;
+          return <ListGroupItem>{item.itemName ? item.itemName : item}</ListGroupItem>;
         })}
       </ListGroup>
     </div>
