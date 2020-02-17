@@ -13,6 +13,7 @@ import LostPassword from './components/LostPassword/LostPassword';
 
 function App() {
   const dispatch = useDispatch();
+  let currentUser;
 
   useEffect(() => {
     const updateTimer = () => {
@@ -21,30 +22,45 @@ function App() {
 
     let intervalID = setInterval(updateTimer, 1000);
 
+    let unsubscribeOrders;
+
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
         // User is signed in.
+        let getUserData = new Promise((resolve, reject) => {
+          firebase.firestore().collection('userData').doc(user.uid).get()
+            .then(querySnapshot => {
+              resolve(querySnapshot.data());
+            })
+            .catch(err => {
+              reject(err);
+            });
+        });
+
+        getUserData
+          .then(data => {
+            unsubscribeOrders = firebase.firestore().collection('orders').where('business', '==', data.business).onSnapshot(res => {
+              let newOrders = [];
+
+              res.forEach(doc => {
+                let data = doc.data();
+
+                newOrders.push({
+                  id: doc.id,
+                  ...data
+                });
+              });
+
+              dispatch({type: "UPDATE_ORDERS", payload: newOrders});
+            });
+          })
+          .catch(err => console.log(err));
+
         dispatch({type: "AUTH_STATE_CHANGE", payload: user});
       } else {
         // No user is signed in.
         dispatch({type: "AUTH_STATE_CHANGE", payload: false});
       }
-    });
-
-    // TODO: Make this use the document in business collection eventually
-    let unsubscribeOrders = firebase.firestore().collection('orders').onSnapshot(res => {
-      let newOrders = [];
-
-      res.forEach(doc => {
-        let data = doc.data();
-
-        newOrders.push({
-          id: doc.id,
-          ...data
-        });
-      });
-
-      dispatch({type: "UPDATE_ORDERS", payload: newOrders});
     });
 
     // Cleanup by clearing interval
