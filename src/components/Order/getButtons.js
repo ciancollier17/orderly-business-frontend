@@ -6,8 +6,12 @@
 import React from 'react';
 import {Button} from 'reactstrap';
 import CompleteCheckmark from './CompleteCheckmark';
+import takeOrder from './takeOrder';
 
-function getButtons (takenBy, completed, user) {
+function getButtons (order, user) {
+  let takenBy = order.takenBy;
+  let completed = order.completed;
+
   if (takenBy) {
     if (takenBy == user && !completed) {
       return <Button color="success">Done</Button>
@@ -17,7 +21,7 @@ function getButtons (takenBy, completed, user) {
       return <span style={{marginLeft: "0.8rem", marginRight: "0.8rem"}}>{takenBy}</span>;
     }
   } else {
-    return <Button color="primary">Take</Button>;
+    return <Button color="primary" onClick={() => takeOrder(order, user.uid)}>Take</Button>;
   }
 }
 

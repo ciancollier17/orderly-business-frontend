@@ -8,7 +8,7 @@ import ItemList from '../ItemList/ItemList';
 
 function Order (props) {
   const [isItemListOpen, setIsItemListOpen] = useState(false);
-  const user = useSelector(full_state => full_state.user.user);
+  const user = useSelector(full_state => full_state.user);
   const timerValue = useSelector(full_state => full_state.timer);
 
   const expandHandler = () => {
@@ -36,7 +36,7 @@ function Order (props) {
       <strong>{props.order.whereTo} <Badge color={badgeColour} pill>{props.order.completed ? formatTimeSinceOrder(props.order.completionTime) : formatTimeSinceOrder(timerValue - props.order.timeOfOrder)}</Badge></strong>
       <span>
         <Button style={{marginRight: "0.5rem"}} color="secondary" onClick={expandHandler}>Expand</Button>
-        {getButtons(props.order.takenBy, props.order.completed, user)}
+        {getButtons(props.order, user)}
       </span>
     </ListGroupItem>
     <ItemList listId={props.order.id} orderItems={props.order.items} isOpen={isItemListOpen} />
