@@ -10,7 +10,7 @@ function Orders () {
 
   if (user) {
     orders.map(order => {
-      if (order.takenBy == user.email) {
+      if (order.takenBy == user.id) {
         userTakenOrders.push(order);
       } else {
         otherOrders.push(order);

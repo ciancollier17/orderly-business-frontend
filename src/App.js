@@ -39,7 +39,11 @@ function App() {
 
         getUserData
           .then(data => {
-            unsubscribeOrders = firebase.firestore().collection('orders').where('business', '==', data.business).onSnapshot(res => {
+            // Create user object and place in redux store
+            dispatch({type: "AUTH_STATE_CHANGE", payload: {id: user.uid, ...data}});
+
+            // Fetch relevant orders
+            unsubscribeOrders = firebase.firestore().collection('orders').where('business', '==', data.business).onSnapshot(async (res) => {
               let newOrders = [];
 
               res.forEach(doc => {
@@ -51,12 +55,17 @@ function App() {
                 });
               });
 
+              for (let i = 0; i < newOrders.length; i++) {
+                if (newOrders[i].takenBy) {
+                  let takenByData = await firebase.firestore().collection('userData').doc(newOrders[i].takenBy).get();
+                  newOrders[i].takenByName = takenByData.data().firstName;
+                }
+              }
+
               dispatch({type: "UPDATE_ORDERS", payload: newOrders});
             });
           })
           .catch(err => console.log(err));
-
-        dispatch({type: "AUTH_STATE_CHANGE", payload: user});
       } else {
         // No user is signed in.
         dispatch({type: "AUTH_STATE_CHANGE", payload: false});
