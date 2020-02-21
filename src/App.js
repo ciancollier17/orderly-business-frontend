@@ -43,29 +43,32 @@ function App() {
             dispatch({type: "AUTH_STATE_CHANGE", payload: {id: user.uid, ...data}});
 
             // Fetch relevant orders
-            unsubscribeOrders = firebase.firestore().collection('orders').where('business', '==', data.business).onSnapshot(async (res) => {
-              let newOrders = [];
+            unsubscribeOrders = firebase.firestore().collection('orders')
+              .where('business', '==', data.business)
+              .onSnapshot(async (res) => {
+                let newOrders = [];
 
-              res.forEach(doc => {
-                let data = doc.data();
+                res.forEach(doc => {
+                  let data = doc.data();
 
-                newOrders.push({
-                  id: doc.id,
-                  ...data
+                  newOrders.push({
+                    id: doc.id,
+                    ...data
+                  });
                 });
-              });
 
-              for (let i = 0; i < newOrders.length; i++) {
-                if (newOrders[i].takenBy) {
-                  let takenByData = await firebase.firestore().collection('userData').doc(newOrders[i].takenBy).get();
-                  newOrders[i].takenByName = takenByData.data().firstName;
+                for (let i = 0; i < newOrders.length; i++) {
+                  if (newOrders[i].takenBy) {
+                    let takenByData = await firebase.firestore().collection('userData').doc(newOrders[i].takenBy).get();
+                    newOrders[i].takenByName = takenByData.data().firstName;
+                  }
                 }
-              }
 
-              dispatch({type: "UPDATE_ORDERS", payload: newOrders});
-            });
-          })
-          .catch(err => console.log(err));
+                newOrders.sort((a, b) => a.timeOfOrder < b.timeOfOrder);
+                dispatch({type: "UPDATE_ORDERS", payload: newOrders});
+              });
+            })
+            .catch(err => console.log(err));
       } else {
         // No user is signed in.
         dispatch({type: "AUTH_STATE_CHANGE", payload: false});

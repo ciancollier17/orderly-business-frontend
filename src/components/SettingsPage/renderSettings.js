@@ -6,7 +6,7 @@ import {FormGroup,
         DropdownMenu,
         DropdownItem} from 'reactstrap';
 
-function renderSettings (settingsList, renderedSettings) {
+function renderSettings (settingsList, renderedSettings, changeHandler) {
   if (!settingsList) {
     return [<span>No settings here yet!</span>];
   }
@@ -22,14 +22,14 @@ function renderSettings (settingsList, renderedSettings) {
       renderedSettings.push(
         <FormGroup>
           <Label for={setting.id}>{setting.title + ": "}</Label>
-          <Input id={setting.id} type="text" />
+          <Input id={setting.id} type="text" onChange={(e) => changeHandler(e)} />
         </FormGroup>);
       break;
     case "dropdown":
       renderedSettings.push(
         <FormGroup>
           <Label for={setting.id}>{setting.title + ":"}</Label>
-          <Input id={setting.id} type="select">
+          <Input id={setting.id} type="select" onChange={(e) => changeHandler(e)}>
             {setting.options.map(option => {
               return <option>{option}</option>;
             })}
@@ -45,7 +45,7 @@ function renderSettings (settingsList, renderedSettings) {
              return (
                <FormGroup check>
                  <Label check>
-                   <Input type="radio" name={setting.id} value={option.value} />
+                   <Input type="radio" name={setting.id} value={option.value} onChange={(e) => changeHandler(e)} />
                    {option.label}
                  </Label>
                </FormGroup>
@@ -62,7 +62,7 @@ function renderSettings (settingsList, renderedSettings) {
             return (
               <FormGroup check>
                 <Label check>
-                  <Input type="checkbox" name={setting.id} value={option.value} />
+                  <Input type="checkbox" name={setting.id} value={option.value} onChange={(e) => changeHandler(e)} />
                   {option.label}
                 </Label>
               </FormGroup>
@@ -73,7 +73,7 @@ function renderSettings (settingsList, renderedSettings) {
       break;
     case "subcategory":
       renderedSettings.push(<h3>{setting.title}</h3>);
-      renderSettings(setting.settings, renderedSettings);
+      renderSettings(setting.settings, renderedSettings, changeHandler);
       renderedSettings.push(<hr />);
       break;
     default:
@@ -83,7 +83,7 @@ function renderSettings (settingsList, renderedSettings) {
 
   let newSettings = [...settingsList];
   newSettings.shift();
-  return renderSettings(newSettings, renderedSettings);
+  return renderSettings(newSettings, renderedSettings, changeHandler);
 }
 
 export default renderSettings;

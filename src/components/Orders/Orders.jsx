@@ -13,7 +13,9 @@ function Orders () {
       if (order.takenBy == user.id) {
         userTakenOrders.push(order);
       } else {
-        otherOrders.push(order);
+        if (otherOrders.length < 100) {
+          otherOrders.push(order);
+        }
       }
     });
   }

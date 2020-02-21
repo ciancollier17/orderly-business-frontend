@@ -8,6 +8,9 @@
     },
     {
       "name": "Orders Screen",
+      "needsManager": true,
+      "collection": "businesses",
+      "document": "business",
       "settings": [
         {
           "title": "Test Settings",
