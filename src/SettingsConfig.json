@@ -63,13 +63,16 @@
     },
     {
       "name": "Account",
+      "collection": "businesses",
+      "document": "business",
+      "needsManager": true,
       "settings": [
         {
           "title": "Establishment Settings",
           "type": "subcategory",
           "settings": [
             {
-              "id": "establishmentname",
+              "id": "businessName",
               "title": "Establishment Name",
               "type": "text"
             },

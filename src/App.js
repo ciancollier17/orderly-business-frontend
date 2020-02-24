@@ -42,6 +42,15 @@ function App() {
             // Create user object and place in redux store
             dispatch({type: "AUTH_STATE_CHANGE", payload: {id: user.uid, ...data}});
 
+            // Get business data
+            firebase.firestore().collection('businesses').doc(data.business).get()
+              .then(businessData => {
+                dispatch({type: "BUSINESS_DATA_LOADED", payload: {id: businessData.id, ...businessData.data()}});
+              })
+              .catch(err => {
+                console.log(err);
+              });
+
             // Fetch relevant orders
             unsubscribeOrders = firebase.firestore().collection('orders')
               .where('business', '==', data.business)

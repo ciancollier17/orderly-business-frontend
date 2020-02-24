@@ -6,7 +6,7 @@ import {FormGroup,
         DropdownMenu,
         DropdownItem} from 'reactstrap';
 
-function renderSettings (settingsList, renderedSettings, changeHandler) {
+function renderSettings (settingsList, renderedSettings, changeHandler, initialValues) {
   if (!settingsList) {
     return [<span>No settings here yet!</span>];
   }
@@ -22,14 +22,14 @@ function renderSettings (settingsList, renderedSettings, changeHandler) {
       renderedSettings.push(
         <FormGroup>
           <Label for={setting.id}>{setting.title + ": "}</Label>
-          <Input id={setting.id} type="text" onChange={(e) => changeHandler(e)} />
+          <Input id={setting.id} name={setting.id} type="text" onChange={(e) => changeHandler(e)} placeholder={initialValues[setting.id] ? initialValues[setting.id] : ""} />
         </FormGroup>);
       break;
     case "dropdown":
       renderedSettings.push(
         <FormGroup>
           <Label for={setting.id}>{setting.title + ":"}</Label>
-          <Input id={setting.id} type="select" onChange={(e) => changeHandler(e)}>
+          <Input id={setting.id} name={setting.id} type="select" defaultValue={initialValues[setting.id] ? initialValues[setting.id] : setting.options[0]} onChange={(e) => changeHandler(e)}>
             {setting.options.map(option => {
               return <option>{option}</option>;
             })}
@@ -45,7 +45,7 @@ function renderSettings (settingsList, renderedSettings, changeHandler) {
              return (
                <FormGroup check>
                  <Label check>
-                   <Input type="radio" name={setting.id} value={option.value} onChange={(e) => changeHandler(e)} />
+                   <Input type="radio" name={setting.id} value={option.value} onChange={(e) => changeHandler(e)} defaultChecked={initialValues[setting.id] ? (initialValues[setting.id] == option.value) : false} />
                    {option.label}
                  </Label>
                </FormGroup>
@@ -62,7 +62,7 @@ function renderSettings (settingsList, renderedSettings, changeHandler) {
             return (
               <FormGroup check>
                 <Label check>
-                  <Input type="checkbox" name={setting.id} value={option.value} onChange={(e) => changeHandler(e)} />
+                  <Input type="checkbox" name={setting.id} value={option.value} onChange={(e) => changeHandler({target: {name: e.target.value, value: e.target.checked}})} />
                   {option.label}
                 </Label>
               </FormGroup>
@@ -73,7 +73,7 @@ function renderSettings (settingsList, renderedSettings, changeHandler) {
       break;
     case "subcategory":
       renderedSettings.push(<h3>{setting.title}</h3>);
-      renderSettings(setting.settings, renderedSettings, changeHandler);
+      renderSettings(setting.settings, renderedSettings, changeHandler, initialValues);
       renderedSettings.push(<hr />);
       break;
     default:
@@ -83,7 +83,7 @@ function renderSettings (settingsList, renderedSettings, changeHandler) {
 
   let newSettings = [...settingsList];
   newSettings.shift();
-  return renderSettings(newSettings, renderedSettings, changeHandler);
+  return renderSettings(newSettings, renderedSettings, changeHandler, initialValues);
 }
 
 export default renderSettings;
