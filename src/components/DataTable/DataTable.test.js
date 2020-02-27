@@ -1,6 +1,6 @@
 import React from 'react';
 import DataTable from './DataTable';
-import {shallow, configure} from 'enzyme';
+import {shallow, configure, mount} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
 configure({adapter: new Adapter()});
@@ -28,4 +28,19 @@ it("Correct number of columns in each row", () => {
 it("Renders correct data in correct cell", () => {
   expect(testTable.find('tbody').childAt(1).childAt(0).text()).toEqual("100");
   expect(testTable.find('tbody').childAt(3).childAt(2).text()).toEqual("90");
+});
+
+let unorderedDataset = [['B', 2],
+                        ['C', 3],
+                        ['A', 1]];
+
+let unorderedTable = shallow(<DataTable title="Sorted" labels={['a', 'b']} dataset={unorderedDataset} />);
+
+it("Can order by numerical columns (ascending)", () => {
+  // Sorting zero direction == Ascending
+  unorderedTable.find('tbody').childAt(0).childAt(1).find(".sortAscending").simulate("click");
+  expect(unorderedTable.find('tbody').childAt(1).childAt(1).text()).toEqual("1");
+  expect(unorderedTable.find('tbody').childAt(1).childAt(0).text()).toEqual("A");
+  expect(unorderedTable.find('tbody').childAt(3).childAt(1).text()).toEqual("3");
+  expect(unorderedTable.find('tbody').childAt(3).childAt(0).text()).toEqual("C");
 });
