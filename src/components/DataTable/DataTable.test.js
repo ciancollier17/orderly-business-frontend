@@ -31,16 +31,42 @@ it("Renders correct data in correct cell", () => {
 });
 
 let unorderedDataset = [['B', 2],
-                        ['C', 3],
-                        ['A', 1]];
-
-let unorderedTable = shallow(<DataTable title="Sorted" labels={['a', 'b']} dataset={unorderedDataset} />);
+                        ['CAD', 3],
+                        ['A', 1],
+                        ['CB', 4]];
 
 it("Can order by numerical columns (ascending)", () => {
-  // Sorting zero direction == Ascending
+  let unorderedTable = shallow(<DataTable title="Sorted" labels={['a', 'b']} dataset={JSON.parse(JSON.stringify(unorderedDataset))} />);
   unorderedTable.find('tbody').childAt(0).childAt(1).find(".sortAscending").simulate("click");
   expect(unorderedTable.find('tbody').childAt(1).childAt(1).text()).toEqual("1");
   expect(unorderedTable.find('tbody').childAt(1).childAt(0).text()).toEqual("A");
-  expect(unorderedTable.find('tbody').childAt(3).childAt(1).text()).toEqual("3");
-  expect(unorderedTable.find('tbody').childAt(3).childAt(0).text()).toEqual("C");
+  expect(unorderedTable.find('tbody').childAt(4).childAt(1).text()).toEqual("4");
+  expect(unorderedTable.find('tbody').childAt(4).childAt(0).text()).toEqual("CB");
+});
+
+it("Can order by numerical columns (descending)", () => {
+  let unorderedTable = shallow(<DataTable title="Sorted" labels={['a', 'b']} dataset={JSON.parse(JSON.stringify(unorderedDataset))} />);
+  unorderedTable.find('tbody').childAt(0).childAt(1).find(".sortDescending").simulate("click");
+  expect(unorderedTable.find('tbody').childAt(1).childAt(1).text()).toEqual("4");
+  expect(unorderedTable.find('tbody').childAt(1).childAt(0).text()).toEqual("CB");
+  expect(unorderedTable.find('tbody').childAt(4).childAt(1).text()).toEqual("1");
+  expect(unorderedTable.find('tbody').childAt(4).childAt(0).text()).toEqual("A");
+});
+
+it("Can order by non-numerical columns (ascending)", () => {
+  let unorderedTable = shallow(<DataTable title="Sorted" labels={['a', 'b']} dataset={JSON.parse(JSON.stringify(unorderedDataset))} />);
+  unorderedTable.find('tbody').childAt(0).childAt(0).find(".sortAscending").simulate("click");
+  expect(unorderedTable.find('tbody').childAt(1).childAt(1).text()).toEqual("1");
+  expect(unorderedTable.find('tbody').childAt(1).childAt(0).text()).toEqual("A");
+  expect(unorderedTable.find('tbody').childAt(4).childAt(1).text()).toEqual("4");
+  expect(unorderedTable.find('tbody').childAt(4).childAt(0).text()).toEqual("CB");
+});
+
+it("Can order by non-numerical columns (descending)", () => {
+  let unorderedTable = shallow(<DataTable title="Sorted" labels={['a', 'b']} dataset={JSON.parse(JSON.stringify(unorderedDataset))} />);
+  unorderedTable.find('tbody').childAt(0).childAt(0).find(".sortDescending").simulate("click");
+  expect(unorderedTable.find('tbody').childAt(1).childAt(1).text()).toEqual("4");
+  expect(unorderedTable.find('tbody').childAt(1).childAt(0).text()).toEqual("CB");
+  expect(unorderedTable.find('tbody').childAt(4).childAt(1).text()).toEqual("1");
+  expect(unorderedTable.find('tbody').childAt(4).childAt(0).text()).toEqual("A");
 });

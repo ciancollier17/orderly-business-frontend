@@ -4,17 +4,28 @@
 /// specified. If ascending = false then the dataset is sorted in
 /// descending order based on the column specified.
 function sortDataset (dataset, column, ascending = true) {
-  if (isNaN(dataset[0][column])) {
-    // col to sort is non-numerical
-  } else {
-    if (ascending) {
-      dataset.sort((a, b) => {
-        return a[column] > b[column];
-      });
-    }
-  }
+  let datasetCopy = JSON.parse(JSON.stringify(dataset));
 
-  return dataset;
+  datasetCopy.sort((a, b) => {
+    if (isNaN(dataset[0][column])) {
+      // col to sort is non-numerical
+      let aCode = 0;
+      let bCode = 0;
+      let index = 0;
+
+      while (aCode == bCode && index < a[column].length && index < b[column].length) {
+        aCode = a[column].charCodeAt(index);
+        bCode = b[column].charCodeAt(index);
+        index++;
+      }
+
+      return ascending ? aCode > bCode : aCode < bCode;
+    } else {
+      return ascending ? a[column] > b[column] : a[column] < b[column];
+    }
+  });
+
+  return datasetCopy;
 }
 
 export default sortDataset;

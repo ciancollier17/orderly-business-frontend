@@ -1,7 +1,7 @@
 /// formatTimeSinceOrder(int seconds)
 /// Converts seconds elapsed since order to minutes and seconds and
 /// returns a formatted string.
-function formatTimeSinceOrder(seconds) {
+function formatTimeSinceOrder(seconds, leadingZeros = false) {
   let minutes = Math.floor(seconds / 60);
   let hours = Math.floor(minutes / 60);
   let remainder = seconds - (minutes * 60);
@@ -14,7 +14,7 @@ function formatTimeSinceOrder(seconds) {
   let remainderToString = remainder.toString();
   remainderToString = remainderToString.length == 1 ? "0" + remainderToString : remainderToString;
 
-  return hoursToString != "00" ? hoursToString + ":" + minutesToString + ":" + remainderToString : minutesToString + ":" + remainderToString;
+  return (hoursToString != "00" || leadingZeros) ? hoursToString + ":" + minutesToString + ":" + remainderToString : minutesToString + ":" + remainderToString;
 }
 
 export default formatTimeSinceOrder;

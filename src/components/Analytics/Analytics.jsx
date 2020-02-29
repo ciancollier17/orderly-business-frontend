@@ -47,7 +47,7 @@ function Analytics () {
           newDataset.push([
             users[i].firstName + " " + users[i].lastName,
             numberOfOrders,
-            formatTimeSinceOrder(Math.floor(totalTime / numberOfOrders))
+            formatTimeSinceOrder(Math.floor(totalTime / numberOfOrders), true)
           ]);
         }
 
