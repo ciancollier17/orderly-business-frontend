@@ -1,14 +1,18 @@
 import React, {useState, useEffect} from 'react';
 import {ListGroup, ListGroupItem, Badge, Button} from 'reactstrap';
 import Order from '../Order/Order';
+import OrderPagination from '../OrderPagination/OrderPagination';
 import paginateOrders from './paginateOrders';
 
 function OrderList (props) {
-  const [pagination, setPagination] = useState(paginateOrders(props.orders, 25));
+  const numberPerPage = 25;
+  const [pagination, setPagination] = useState(paginateOrders(props.orders, numberPerPage));
   let [currentPage, prevPage, nextPage] = pagination;
+  const nextPageFunction = nextPage ? () => setPagination(nextPage()) : null;
+  const prevPageFunction = prevPage ? () => setPagination(prevPage()) : null;
 
   useEffect(() => {
-    setPagination(paginateOrders(props.orders, 25));
+    setPagination(paginateOrders(props.orders, numberPerPage));
   }, [props.orders])
 
   return (
@@ -19,6 +23,7 @@ function OrderList (props) {
           return <Order key={order.id} order={order} />
         })}
       </ListGroup>
+      <OrderPagination prev={prevPageFunction} next={nextPageFunction} />
     </div>
   )
 }
