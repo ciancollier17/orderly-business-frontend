@@ -19,9 +19,33 @@ function sortDataset (dataset, column, ascending = true) {
         index++;
       }
 
-      return ascending ? aCode > bCode : aCode < bCode;
+      if (ascending) {
+        if (aCode > bCode) {
+          return 1;
+        } else {
+          return -1
+        }
+      } else {
+        if (aCode < bCode) {
+          return 1;
+        } else {
+          return -1;
+        }
+      }
     } else {
-      return ascending ? a[column] > b[column] : a[column] < b[column];
+      if (ascending) {
+        if (a[column] > b[column]) {
+          return 1;
+        } else {
+          return -1;
+        }
+      } else {
+        if (a[column] < b[column]) {
+          return 1;
+        } else {
+          return -1;
+        }
+      }
     }
   });
 
