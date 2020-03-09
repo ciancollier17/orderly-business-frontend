@@ -3,6 +3,7 @@ import * as firebase from 'firebase';
 import "firebase/firestore";
 import {useSelector} from 'react-redux';
 import DataTable from '../DataTable/DataTable';
+import DataChart from '../DataChart/DataChart';
 import formatTimeSinceOrder from '../Order/formatTimeSinceOrder';
 
 function Analytics () {
@@ -69,6 +70,10 @@ function Analytics () {
     <div className="row" style={{width: "90%", margin: "auto", marginBottom: "2rem"}}>
       <div className="col-md-6">
         <DataTable title="Staff Performance" labels={["Name", "# Of Orders", "Avg. Complet. Time"]} dataset={dataset} />
+        <DataChart labels={["Name", "# Of Orders", "Avg. Complet. Time"]} dataset={dataset} charts={[
+          {col: 1, title: "# Of Orders By Staff Member", nav: "# Of Orders", type: "bar"},
+          {col: 2, title: "Avg. Complet. Time By Staff Member", nav: "Avg. Complet. Time", type: "bar"}
+        ]} />
       </div>
       <div className="col-md-6">
 
